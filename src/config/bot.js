@@ -25,7 +25,7 @@ export const botConfig = {
     activities: [
       {
         // Text users will see (example: "Playing /help | Titan Bot").
-        name: "Made with ❤️",
+        name: "Made by stars",
         // Activity type number (0 = Playing).
         type: 0, 
       },
@@ -369,6 +369,76 @@ export const botConfig = {
     // Channel ID for goodbye messages.
     defaultGoodbyeChannel: null,
   },
+
+  const {
+    SlashCommandBuilder,
+    ModalBuilder,
+    TextInputBuilder,
+    TextInputStyle,
+    ActionRowBuilder,
+    EmbedBuilder
+} = require('discord.js');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('partner')
+        .setDescription('Create a partnership post'),
+
+    async execute(interaction) {
+
+        const modal = new ModalBuilder()
+            .setCustomId('partnerModal')
+            .setTitle('Partnership Request');
+
+        const inviteInput = new TextInputBuilder()
+            .setCustomId('invite')
+            .setLabel('Server Invite Link')
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
+
+        const pingInput = new TextInputBuilder()
+            .setCustomId('ping')
+            .setLabel('Role/User Ping')
+            .setPlaceholder('@everyone, @here, <@&roleid>')
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
+
+        modal.addComponents(
+            new ActionRowBuilder().addComponents(inviteInput),
+            new ActionRowBuilder().addComponents(pingInput)
+        );
+
+        await interaction.showModal(modal);
+    }
+};
+
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isModalSubmit()) return;
+
+    if (interaction.customId === 'partnerModal') {
+
+        const invite = interaction.fields.getTextInputValue('invite');
+        const ping = interaction.fields.getTextInputValue('ping');
+
+        const embed = new EmbedBuilder()
+            .setTitle('🤝 New Partnership')
+            .setDescription(
+                `Join our partner server!\n\n🔗 ${invite}`
+            )
+            .setColor('Blue')
+            .setTimestamp();
+
+        await interaction.channel.send({
+            content: ping,
+            embeds: [embed]
+        });
+
+        await interaction.reply({
+            content: 'Partnership post sent!',
+            ephemeral: true
+        });
+    }
+});
 
   // =========================
   // COUNTER CHANNELS
