@@ -1,56 +1,15 @@
-const {
-    SlashCommandBuilder,
-    EmbedBuilder,
-    StringSelectMenuBuilder,
-    StringSelectMenuOptionBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle
-} = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('schematics')
-        .setDescription('Open the schematics menu'),
+        .setName('setupschematics')
+        .setDescription('Create the schematics download menu'),
 
     async execute(interaction) {
-
-        const embed = new EmbedBuilder()
-            .setColor('#00ff88')
-            .setTitle("Blaze SMP Schematics")
-            .setDescription("Select the schematic you'd like to download from the menu below.")
-            .setImage('https://i.imgur.com/4M34hi2.png');
-
-        const menu = new StringSelectMenuBuilder()
-            .setCustomId('schematic_select')
-            .setPlaceholder('Choose a schematic...')
-            .addOptions(
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Spawn')
-                    .setDescription('Download the server spawn')
-                    .setValue('spawn'),
-
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Crates')
-                    .setDescription('Download crate setup')
-                    .setValue('crates'),
-
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('PvP Arena')
-                    .setDescription('Download PvP arena')
-                    .setValue('arena'),
-
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Shop')
-                    .setDescription('Download shop build')
-                    .setValue('shop')
-            );
-
-        const row = new ActionRowBuilder().addComponents(menu);
-
+        // Your embed + dropdown code goes here
         await interaction.reply({
-            embeds: [embed],
-            components: [row]
+            content: 'Schematics menu created.',
+            ephemeral: true
         });
     }
 };
