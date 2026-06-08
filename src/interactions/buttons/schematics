@@ -1,0 +1,42 @@
+client.on('interactionCreate', async interaction => {
+
+    if (interaction.isStringSelectMenu()) {
+
+        if (interaction.customId === 'schematic_select') {
+
+            let downloadUrl;
+
+            switch (interaction.values[0]) {
+
+                case 'spawn':
+                    downloadUrl = 'https://yourdomain.com/files/spawn.zip';
+                    break;
+
+                case 'crates':
+                    downloadUrl = 'https://yourdomain.com/files/crates.zip';
+                    break;
+
+                case 'arena':
+                    downloadUrl = 'https://yourdomain.com/files/arena.zip';
+                    break;
+
+                case 'shop':
+                    downloadUrl = 'https://yourdomain.com/files/shop.zip';
+                    break;
+            }
+
+            const button = new ButtonBuilder()
+                .setLabel('📥 Download')
+                .setStyle(ButtonStyle.Link)
+                .setURL(downloadUrl);
+
+            const row = new ActionRowBuilder().addComponents(button);
+
+            await interaction.reply({
+                content: 'Your download is ready.',
+                components: [row],
+                ephemeral: true
+            });
+        }
+    }
+});
