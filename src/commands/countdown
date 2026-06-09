@@ -1,10 +1,10 @@
 const {
     SlashCommandBuilder
-} = require('discord.js');
+} = require('bot.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('countdown')
+        .setName('buildcountdown')
         .setDescription('Starts a 24 hour countdown'),
 
     async execute(interaction) {
